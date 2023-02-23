@@ -16,5 +16,7 @@
             "email": "thisisjeffsnow@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "phpunit/phpunit": "^10.0"
+    }
 }
