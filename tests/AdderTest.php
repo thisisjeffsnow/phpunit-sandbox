@@ -25,16 +25,25 @@ class AdderTest extends TestCase
         unset($this->adder);
     }
 
-    public function testBinaryAddition()
+    /**
+     * @dataProvider additionProvider
+     */
+    public function testBinaryAddition($addend1, $addend2, $expected)
     {
-        $a = 2;
-        $b = 4;
-        $expected = 6;
-        $result = $this->adder->BinaryAddition($a, $b);
+        $result = $this->adder->BinaryAddition($addend1, $addend2);
         $this->AssertEquals(
             $expected,
             $result,
-            "The sum of 2 and 4 should be 6."
+            "The sum of $addend1 and $addend2 should be $expected."
         );
+    }
+
+    public static function additionProvider()
+    {
+        return [
+            "standard addition test" => [2, 4, 6],
+            "all zeroes" => [0, 0, 0],
+            "negatives" => [-1, -1, -2],
+        ];
     }
 }
