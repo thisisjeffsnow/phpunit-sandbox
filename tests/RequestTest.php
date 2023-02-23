@@ -47,7 +47,7 @@ class RequestTest extends TestCase
         return [
             "query variable" => ["/test/path.php?id=1", "/test/path.php"],
             "slash" => ["/", "/"],
-            "empty" => ["", "/"],
+            "empty" => ["", "/"], # not sure if this even ever happens?
             "simple file" => ["/test.php", "/test.php"],
         ];
     }
