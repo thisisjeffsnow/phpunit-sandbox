@@ -1,0 +1,20 @@
+{
+    "name": "jeff/phpunit-sandbox",
+    "autoload": {
+        "psr-4": {
+            "Sandbox\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sandbox\\Test\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "thisisjeffsnow",
+            "email": "thisisjeffsnow@gmail.com"
+        }
+    ],
+    "require": {}
+}
