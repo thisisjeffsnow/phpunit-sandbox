@@ -75,6 +75,8 @@ class RequestTest extends TestCase
         return [
             'Test for method GET' => ['GET', 'GET'],
             'Test for method POST' => ['POST', 'POST'],
+            'lowercase get' => ['get', 'GET'],
+            'lowercase post' => ['post', 'POST'],
         ];
     }
 }
