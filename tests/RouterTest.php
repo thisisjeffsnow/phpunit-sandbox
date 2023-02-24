@@ -9,7 +9,6 @@ require dirname(dirname(__FILE__)) .
     "autoload.php";
 
 use PHPUnit\Framework\TestCase;
-use Sandbox\RequestInterface;
 use Sandbox\Router;
 use Sandbox\Request;
 
@@ -97,11 +96,7 @@ class RouterTest extends TestCase
         $givenClassInstance = new $givenControllerClass();
         $expectedResult = $givenClassInstance->{$givenControllerMethod}();
 
-        $requestMock = $this->getMockBuilder(
-            RequestInterface::class
-        )->getMock();
-        $this->assertInstanceOf(RequestInterface::class, $requestMock);
-
+        $requestMock = $this->getMockBuilder(Request::class)->getMock();
         $requestMock
             ->expects($this->once())
             ->method("getMethod")

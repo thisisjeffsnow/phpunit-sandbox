@@ -1,7 +1,6 @@
 <?php
 
 namespace Sandbox;
-use Sandbox\Request;
 
 class Router
 {
@@ -21,7 +20,7 @@ class Router
         ];
     }
 
-    public function resolveRoute(RequestInterface $request)
+    public function resolveRoute($request)
     {
         $requestMethod = $request->getMethod();
         $requestPath = $request->getPath();
