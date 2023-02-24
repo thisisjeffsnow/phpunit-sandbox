@@ -6,11 +6,11 @@ class Request
 {
     public function getPath()
     {
-        $rawPath = $_SERVER["REQUEST_URI"];
+        $rawPath = $_SERVER['REQUEST_URI'];
         if (strlen($rawPath) < 1) {
-            return "/";
+            return '/';
         }
-        $delimPos = strpos($rawPath, "?");
+        $delimPos = strpos($rawPath, '?');
         return $delimPos === false ? $rawPath : substr($rawPath, 0, $delimPos);
     }
 }

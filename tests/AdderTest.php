@@ -4,9 +4,9 @@ namespace Sandbox\Test;
 
 require dirname(dirname(__FILE__)) .
     DIRECTORY_SEPARATOR .
-    "vendor" .
+    'vendor' .
     DIRECTORY_SEPARATOR .
-    "autoload.php";
+    'autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Sandbox\Adder;
@@ -28,22 +28,22 @@ class AdderTest extends TestCase
     /**
      * @dataProvider additionProvider
      */
-    public function testBinaryAddition($addend1, $addend2, $expected)
+    public function testBinaryAddition($addend1, $addend2, $expectedResult)
     {
-        $result = $this->adder->BinaryAddition($addend1, $addend2);
+        $actualResult = $this->adder->BinaryAddition($addend1, $addend2);
         $this->AssertEquals(
-            $expected,
-            $result,
-            "The sum of $addend1 and $addend2 should be $expected."
+            $expectedResult,
+            $actualResult,
+            "The sum of $addend1 and $addend2 should be $expectedResult."
         );
     }
 
     public static function additionProvider()
     {
         return [
-            "standard addition test" => [2, 4, 6],
-            "all zeroes" => [0, 0, 0],
-            "negatives" => [-1, -1, -2],
+            'standard addition test' => [2, 4, 6],
+            'all zeroes' => [0, 0, 0],
+            'negatives' => [-1, -1, -2],
         ];
     }
 }
