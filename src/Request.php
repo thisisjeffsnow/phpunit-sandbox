@@ -28,7 +28,7 @@ class Request
                 return $rawMethod;
             default:
                 throw new RequestMethodException(
-                    'HTTP Request method must be GET, PUT, or POST only.'
+                    'HTTP Request method must be GET, POST, or PUT.'
                 );
         }
     }

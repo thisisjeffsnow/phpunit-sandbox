@@ -89,8 +89,8 @@ class RequestTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = $givenRequestMethod;
         $this->expectException(\Sandbox\RequestMethodException::class);
-        $this->expectExceptionMessage(
-            'HTTP Request method must be GET, PUT, or POST only.'
+        $this->expectExceptionMessageMatches(
+            '/HTTP Request method must be GET, POST, or PUT\./'
         );
         $this->request->getMethod();
     }

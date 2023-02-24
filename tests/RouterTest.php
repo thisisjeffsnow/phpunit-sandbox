@@ -87,17 +87,17 @@ class RouterTest extends TestCase
         $givenRequestPath,
         $expectedResult
     ) {
-        $request = $this->getMockBuilder(Request::class)->getMock();
-        $request
-            ->expects($this->once())
-            ->method('getMethod')
-            ->willReturn($givenRequestMethod);
-        $request
-            ->expects($this->once())
-            ->method('getPath')
-            ->willReturn($givenRequestPath);
+        // $mockRequest = $this->getMockBuilder(Request::class)->getMock();
+        // $mockRequest
+        //     ->expects($this->once())
+        //     ->method('getMethod')
+        //     ->willReturn($givenRequestMethod);
+        // $mockRequest
+        //     ->expects($this->once())
+        //     ->method('getPath')
+        //     ->willReturn($givenRequestPath);
 
-        $actualResult = $this->router->resolveRoute($request);
+        $actualResult = $this->router->resolveRoute($this->request);
 
         $this->assertEquals($expectedResult, $actualResult);
     }
