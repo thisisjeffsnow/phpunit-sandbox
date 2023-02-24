@@ -6,11 +6,12 @@ class Request
 {
     public const METHOD_POST = 'POST';
     public const METHOD_GET = 'GET';
+    public const METHOD_PUT = 'PUT';
 
     public function getPath()
     {
         $rawPath = $_SERVER['REQUEST_URI'];
-        if (strlen($rawPath) < 1) {
+        if ($rawPath == '') {
             return '/';
         }
         $delimPos = strpos($rawPath, '?');
@@ -19,6 +20,16 @@ class Request
 
     public function getMethod()
     {
-        return strtoupper($_SERVER['REQUEST_METHOD']);
+        $rawMethod = strtoupper($_SERVER['REQUEST_METHOD']);
+        switch ($rawMethod) {
+            case Request::METHOD_POST:
+            case Request::METHOD_GET:
+            case Request::METHOD_PUT:
+                return $rawMethod;
+            default:
+                throw new RequestMethodException(
+                    'HTTP Request method must be GET, PUT, or POST only.'
+                );
+        }
     }
 }
