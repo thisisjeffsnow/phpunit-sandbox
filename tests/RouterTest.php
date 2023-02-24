@@ -87,17 +87,24 @@ class RouterTest extends TestCase
         $givenRequestPath,
         $expectedResult
     ) {
-        // $mockRequest = $this->getMockBuilder(Request::class)->getMock();
-        // $mockRequest
-        //     ->expects($this->once())
-        //     ->method('getMethod')
-        //     ->willReturn($givenRequestMethod);
-        // $mockRequest
-        //     ->expects($this->once())
-        //     ->method('getPath')
-        //     ->willReturn($givenRequestPath);
+        $this->router->addRoute(
+            Request::METHOD_GET,
+            '/',
+            'Sandbox\HomeController',
+            'getHome'
+        );
+        $this->router->addRoute(
+            Request::METHOD_POST,
+            '/',
+            'Sandbox\HomeController',
+            'postHome'
+        );
 
-        $actualResult = $this->router->resolveRoute($this->request);
+        $_SERVER['REQUEST_METHOD'] = $givenRequestMethod;
+        $_SERVER['REQUEST_URI'] = $givenRequestPath;
+        $newRequest = new Request();
+
+        $actualResult = $this->router->resolveRoute($newRequest);
 
         $this->assertEquals($expectedResult, $actualResult);
     }
@@ -105,8 +112,8 @@ class RouterTest extends TestCase
     public static function resolveRouteProvider()
     {
         return [
-            [Request::METHOD_GET, '/', ['Sandbox\MainController', 'getHome']],
-            [Request::METHOD_POST, '/', ['Sandbox\MainController', 'postHome']],
+            [Request::METHOD_GET, '/', ['Sandbox\HomeController', 'getHome']],
+            [Request::METHOD_POST, '/', ['Sandbox\HomeController', 'postHome']],
         ];
     }
 }
