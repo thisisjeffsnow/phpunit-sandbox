@@ -31,7 +31,7 @@ class RequestTest extends TestCase
      */
     public function testRequestGetPath($givenPath, $expectedResult)
     {
-        $_SERVER['REQUEST_URI'] = "$givenPath";
+        $_SERVER['REQUEST_URI'] = $givenPath;
 
         $actualResult = $this->request->getPath();
 
@@ -58,7 +58,7 @@ class RequestTest extends TestCase
      */
     public function testRequestGetMethod($givenRequestMethod, $expectedResult)
     {
-        $_SERVER['REQUEST_METHOD'] = "$givenRequestMethod";
+        $_SERVER['REQUEST_METHOD'] = $givenRequestMethod;
 
         $actualResult = $this->request->getMethod();
 
@@ -87,7 +87,7 @@ class RequestTest extends TestCase
      */
     public function testRequestGetMethodException($givenRequestMethod)
     {
-        $_SERVER['REQUEST_METHOD'] = "$givenRequestMethod";
+        $_SERVER['REQUEST_METHOD'] = $givenRequestMethod;
         $this->expectException(\Sandbox\RequestMethodException::class);
         $this->expectExceptionMessage(
             'HTTP Request method must be GET, PUT, or POST only.'
