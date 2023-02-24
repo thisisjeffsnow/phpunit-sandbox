@@ -8,4 +8,9 @@ class HomeController
     {
         return 'getHome';
     }
+
+    public function postHome()
+    {
+        return 'postHome';
+    }
 }

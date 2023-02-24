@@ -94,11 +94,14 @@ class RouterTest extends TestCase
             'method' => $givenControllerMethod,
         ];
 
-        $expectedResult = $givenControllerMethod;
+        $givenClassInstance = new $givenControllerClass();
+        $expectedResult = $givenClassInstance->{$givenControllerMethod}();
 
         $requestMock = $this->getMockBuilder(
             RequestInterface::class
         )->getMock();
+        $this->assertInstanceOf(RequestInterface::class, $requestMock);
+
         $requestMock
             ->expects($this->once())
             ->method('getMethod')
@@ -107,8 +110,6 @@ class RouterTest extends TestCase
             ->expects($this->once())
             ->method('getPath')
             ->willReturn($givenControllerMethod);
-
-        $request = new Request();
 
         $actualResult = $this->router->resolveRoute($requestMock);
 
