@@ -16,8 +16,8 @@ class Router
         $controllerMethod
     ) {
         $this->routeMap[$requestMethod][$requestPath] = [
-            'class' => $controllerClass,
-            'method' => $controllerMethod,
+            "class" => $controllerClass,
+            "method" => $controllerMethod,
         ];
     }
 
@@ -26,11 +26,11 @@ class Router
         $requestMethod = $request->getMethod();
         $requestPath = $request->getPath();
         $routeArray = $this->routeMap[$requestMethod][$requestPath] ?? [
-            'class' => 'Sandbox\HomeController',
-            'method' => 'getHome',
+            "class" => "Sandbox\HomeController",
+            "method" => "getHome",
         ];
-        $controllerClass = $routeArray['class'];
-        $controllerMethod = $routeArray['method'];
+        $controllerClass = $routeArray["class"];
+        $controllerMethod = $routeArray["method"];
         $controllerClassInstance = new $controllerClass();
         return $controllerClassInstance->{$controllerMethod}();
     }
