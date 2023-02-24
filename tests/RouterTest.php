@@ -9,6 +9,7 @@ require dirname(dirname(__FILE__)) .
     'autoload.php';
 
 use PHPUnit\Framework\TestCase;
+use Sandbox\RequestInterface;
 use Sandbox\Router;
 use Sandbox\Request;
 
@@ -85,26 +86,31 @@ class RouterTest extends TestCase
     public function testResolveRoute(
         $givenRequestMethod,
         $givenRequestPath,
-        $expectedResult
+        $givenControllerClass,
+        $givenControllerMethod
     ) {
-        $this->router->addRoute(
-            Request::METHOD_GET,
-            '/',
-            'Sandbox\HomeController',
-            'getHome'
-        );
-        $this->router->addRoute(
-            Request::METHOD_POST,
-            '/',
-            'Sandbox\HomeController',
-            'postHome'
-        );
+        $this->router->routeMap[$givenRequestMethod][$givenRequestPath] = [
+            'class' => $givenControllerClass,
+            'method' => $givenControllerMethod,
+        ];
 
-        $_SERVER['REQUEST_METHOD'] = $givenRequestMethod;
-        $_SERVER['REQUEST_URI'] = $givenRequestPath;
-        $newRequest = new Request();
+        $expectedResult = $givenControllerMethod;
 
-        $actualResult = $this->router->resolveRoute($newRequest);
+        $requestMock = $this->getMockBuilder(
+            RequestInterface::class
+        )->getMock();
+        $requestMock
+            ->expects($this->once())
+            ->method('getMethod')
+            ->willReturn($givenRequestMethod);
+        $requestMock
+            ->expects($this->once())
+            ->method('getPath')
+            ->willReturn($givenControllerMethod);
+
+        $request = new Request();
+
+        $actualResult = $this->router->resolveRoute($requestMock);
 
         $this->assertEquals($expectedResult, $actualResult);
     }
@@ -112,8 +118,18 @@ class RouterTest extends TestCase
     public static function resolveRouteProvider()
     {
         return [
-            [Request::METHOD_GET, '/', ['Sandbox\HomeController', 'getHome']],
-            [Request::METHOD_POST, '/', ['Sandbox\HomeController', 'postHome']],
+            'test home get' => [
+                Request::METHOD_GET,
+                '/',
+                'Sandbox\HomeController',
+                'getHome',
+            ],
+            'test home post' => [
+                Request::METHOD_POST,
+                '/',
+                'Sandbox\HomeController',
+                'postHome',
+            ],
         ];
     }
 }

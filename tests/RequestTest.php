@@ -23,7 +23,6 @@ class RequestTest extends TestCase
     public function tearDown(): void
     {
         unset($this->request);
-        unset($_SERVER['REQUEST_URI']);
     }
 
     /**

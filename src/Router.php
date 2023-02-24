@@ -21,13 +21,17 @@ class Router
         ];
     }
 
-    public function resolveRoute(Request $request)
+    public function resolveRoute(RequestInterface $request)
     {
         $requestMethod = $request->getMethod();
         $requestPath = $request->getPath();
-        $requestedRouteMapArray = $this->routeMap[$requestMethod][$requestPath];
-        $controllerClass = $requestedRouteMapArray['class'];
-        $controllerMethod = $requestedRouteMapArray['method'];
-        return [$controllerClass, $controllerMethod];
+        $routeArray = $this->routeMap[$requestMethod][$requestPath] ?? [
+            'class' => 'Sandbox\HomeController',
+            'method' => 'getHome',
+        ];
+        $controllerClass = $routeArray['class'];
+        $controllerMethod = $routeArray['method'];
+        $controllerClassInstance = new $controllerClass();
+        return $controllerClassInstance->{$controllerMethod}();
     }
 }

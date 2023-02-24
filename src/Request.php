@@ -2,7 +2,7 @@
 
 namespace Sandbox;
 
-class Request
+class Request implements RequestInterface
 {
     public const METHOD_POST = 'POST';
     public const METHOD_GET = 'GET';
@@ -26,9 +26,10 @@ class Request
             case Request::METHOD_GET:
             case Request::METHOD_PUT:
                 return $rawMethod;
+                break;
             default:
                 throw new RequestMethodException(
-                    'HTTP Request method must be GET, POST, or PUT.'
+                    'HTTP Request method must be GET, POST, or PUT. '
                 );
         }
     }
