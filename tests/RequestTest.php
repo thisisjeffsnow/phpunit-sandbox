@@ -48,7 +48,7 @@ class RequestTest extends TestCase
         return [
             'query variable' => ['/test/path.php?id=1', '/test/path.php'],
             'slash' => ['/', '/'],
-            'empty' => ['', '/'], # not sure if this even ever happens?
+            'empty' => ['', '/'], // not sure if this even ever happens?
             'simple file' => ['/test.php', '/test.php'],
         ];
     }
@@ -75,8 +75,36 @@ class RequestTest extends TestCase
         return [
             'Test for method GET' => ['GET', 'GET'],
             'Test for method POST' => ['POST', 'POST'],
+            'Test for method PUT' => ['PUT', 'PUT'],
             'lowercase get' => ['get', 'GET'],
             'lowercase post' => ['post', 'POST'],
+            'lowercase put' => ['put', 'PUT'],
+        ];
+    }
+
+    /**
+     * @dataProvider requestGetMethodExceptionProvider
+     */
+    public function testRequestGetMethodException($givenRequestMethod)
+    {
+        $_SERVER['REQUEST_METHOD'] = "$givenRequestMethod";
+        $this->expectException(\Sandbox\RequestMethodException::class);
+        $this->expectExceptionMessage(
+            'HTTP Request method must be GET, PUT, or POST only.'
+        );
+        $this->request->getMethod();
+    }
+
+    public static function requestGetMethodExceptionProvider()
+    {
+        return [
+            'Delete method' => ['DELETE'],
+            'Head method' => ['HEAD'],
+            'Options method' => ['OPTIONS'],
+            'Trace method' => ['TRACE'],
+            'Connect method' => ['CONNECT'],
+            'blank string' => [''],
+            'gibberish' => ['d94jg9c'],
         ];
     }
 }
