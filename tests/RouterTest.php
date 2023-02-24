@@ -10,6 +10,7 @@ require dirname(dirname(__FILE__)) .
 
 use PHPUnit\Framework\TestCase;
 use Sandbox\Router;
+use Sandbox\Request;
 
 class RouterTest extends TestCase
 {
@@ -25,6 +26,9 @@ class RouterTest extends TestCase
         unset($this->router);
     }
 
+    /**
+     * @dataProvider addRouteProvider
+     */
     public function testAddRoute(
         $givenRequestMethod,
         $givenRequestPath,
@@ -39,5 +43,39 @@ class RouterTest extends TestCase
             $givenControllerMethod
         );
         $this->assertEquals($expectedResult, $this->router->routeMap);
+    }
+
+    public static function addRouteProvider()
+    {
+        return [
+            [
+                Request::METHOD_GET,
+                '/',
+                'Sandbox\Controller\HomeController',
+                'getHome',
+                [
+                    Request::METHOD_GET => [
+                        '/' => [
+                            'class' => 'Sandbox\Controller\HomeController',
+                            'method' => 'getHome',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                Request::METHOD_POST,
+                '/',
+                'Sandbox\Controller\HomeController',
+                'postHome',
+                [
+                    Request::METHOD_POST => [
+                        '/' => [
+                            'class' => 'Sandbox\Controller\HomeController',
+                            'method' => 'postHome',
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 }
