@@ -1,6 +1,7 @@
 <?php
 
 namespace Sandbox;
+use Sandbox\Exception\InvalidRequestMethodException;
 
 class Request
 {

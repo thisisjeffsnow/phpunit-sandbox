@@ -1,6 +1,9 @@
 <?php
 
 namespace Sandbox;
+use Sandbox\Exception\RouteArrayNotFoundException;
+use Sandbox\Exception\RouteMethodNotFoundException;
+use Sandbox\Exception\RouteClassNotFoundException;
 
 class Router
 {

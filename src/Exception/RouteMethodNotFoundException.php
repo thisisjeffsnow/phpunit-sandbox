@@ -1,6 +1,6 @@
 <?php
 
-namespace Sandbox;
+namespace Sandbox\Exception;
 use \Exception;
 
 class RouteMethodNotFoundException extends Exception

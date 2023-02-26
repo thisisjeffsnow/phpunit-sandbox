@@ -108,7 +108,9 @@ class RouterTest extends TestCase
 
         $this->router->routeMap = [];
 
-        $this->expectException(\Sandbox\RouteArrayNotFoundException::class);
+        $this->expectException(
+            \Sandbox\Exception\RouteArrayNotFoundException::class
+        );
         $this->expectExceptionMessageMatches(
             '/Requested Route for Request Method ' .
                 'and Request Path not found in RouteMap\./'
@@ -147,7 +149,9 @@ class RouterTest extends TestCase
             ->method('getPath')
             ->willReturn('/test');
 
-        $this->expectException(\Sandbox\RouteClassNotFoundException::class);
+        $this->expectException(
+            \Sandbox\Exception\RouteClassNotFoundException::class
+        );
         $this->expectExceptionMessageMatches(
             '/Requested Class for Requested Route not found ' .
                 'or not instantiated\./'
@@ -176,7 +180,9 @@ class RouterTest extends TestCase
             ->method('getPath')
             ->willReturn('/test');
 
-        $this->expectException(\Sandbox\RouteMethodNotFoundException::class);
+        $this->expectException(
+            \Sandbox\Exception\RouteMethodNotFoundException::class
+        );
         $this->expectExceptionMessageMatches(
             '/Requested Method for Requested Route Class not found ' .
                 'or not instantiated\./'
