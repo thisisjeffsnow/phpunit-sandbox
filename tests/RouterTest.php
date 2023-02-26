@@ -118,7 +118,7 @@ class RouterTest extends TestCase
         $this->expectException(\Sandbox\RouteArrayNotFoundException::class);
         $this->expectExceptionMessageMatches(
             '/Requested Route for Request Method ' .
-                'and Request Path not found in RouteMap./'
+                'and Request Path not found in RouteMap\./'
         );
 
         $requestMock = $this->getMockBuilder(Request::class)->getMock();

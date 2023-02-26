@@ -25,6 +25,12 @@ class Router
         $requestMethod = $request->getMethod();
         $requestPath = $request->getPath();
         $routeArray = $this->routeMap[$requestMethod][$requestPath] ?? null;
+        if (!$routeArray) {
+            throw new RouteArrayNotFoundException(
+                'Requested Route for Request Method ' .
+                    'and Request Path not found in RouteMap.'
+            );
+        }
         $controllerClass = $routeArray['class'];
         $controllerMethod = $routeArray['method'];
         $controllerClassInstance = new $controllerClass();
