@@ -31,6 +31,7 @@ class Router
                     'and Request Path not found in RouteMap.'
             );
         }
+
         $controllerClass = $routeArray['class'];
         $controllerMethod = $routeArray['method'];
 
