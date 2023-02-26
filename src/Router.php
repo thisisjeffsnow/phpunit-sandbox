@@ -33,6 +33,13 @@ class Router
         }
         $controllerClass = $routeArray['class'];
         $controllerMethod = $routeArray['method'];
+
+        if (!class_exists($controllerClass)) {
+            throw new RouteClassNotFoundException(
+                'Requested Class for Requested Route not found ' .
+                    'or not instantiated.'
+            );
+        }
         $controllerClassInstance = new $controllerClass();
         return $controllerClassInstance->{$controllerMethod}();
     }

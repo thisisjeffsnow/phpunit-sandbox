@@ -81,16 +81,9 @@ class RouterTest extends TestCase
 
     public function testResolveRoute()
     {
-        $testController = new class {
-            public function testControllerMethod()
-            {
-                return 'Test Result';
-            }
-        };
-
         $this->router->routeMap[Request::METHOD_GET]['/test'] = [
-            'class' => $testController,
-            'method' => 'testControllerMethod',
+            'class' => 'Sandbox\Test\TestClass',
+            'method' => 'testMethod',
         ];
 
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
