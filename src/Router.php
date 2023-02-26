@@ -42,6 +42,13 @@ class Router
             );
         }
         $controllerClassInstance = new $controllerClass();
+
+        if (!method_exists($controllerClass, $controllerMethod)) {
+            throw new RouteMethodNotFoundException(
+                'Requested Method for Requested Route Class not found ' .
+                    'or not instantiated.'
+            );
+        }
         return $controllerClassInstance->{$controllerMethod}();
     }
 }
