@@ -133,4 +133,33 @@ class RouterTest extends TestCase
 
         $this->router->resolveRoute($requestMock);
     }
+
+    public function testResolveRouteRouteClassNotFoundException()
+    {
+        // test that an exception is thrown when the requested class
+        // in routeMap doesn't exist or can't be instantiated.
+
+        $this->router->routeMap[Request::METHOD_GET]['/test'] = [
+            'class' => 'classThatDoesntExist',
+            'method' => 'someMethod',
+        ];
+
+        $requestMock = $this->getMockBuilder(Request::class)->getMock();
+        $requestMock
+            ->expects($this->once())
+            ->method('getMethod')
+            ->willReturn(Request::METHOD_GET);
+        $requestMock
+            ->expects($this->once())
+            ->method('getPath')
+            ->willReturn('/test');
+
+        $this->expectException(\Sandbox\RouteClassNotFoundException::class);
+        $this->expectExceptionMessageMatches(
+            '/Requested Class for Requested Route not found ' .
+                'or not instantiated\./'
+        );
+
+        $this->router->resolveRoute($requestMock);
+    }
 }
