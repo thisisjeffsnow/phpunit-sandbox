@@ -4,9 +4,9 @@ namespace Sandbox\Test;
 
 require dirname(dirname(__FILE__)) .
     DIRECTORY_SEPARATOR .
-    "vendor" .
+    'vendor' .
     DIRECTORY_SEPARATOR .
-    "autoload.php";
+    'autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Sandbox\Router;
@@ -50,28 +50,28 @@ class RouterTest extends TestCase
         return [
             [
                 Request::METHOD_GET,
-                "/",
-                "Sandbox\HomeController",
-                "getHome",
+                '/',
+                'Sandbox\HomeController',
+                'getHome',
                 [
                     Request::METHOD_GET => [
-                        "/" => [
-                            "class" => "Sandbox\HomeController",
-                            "method" => "getHome",
+                        '/' => [
+                            'class' => 'Sandbox\HomeController',
+                            'method' => 'getHome',
                         ],
                     ],
                 ],
             ],
             [
                 Request::METHOD_POST,
-                "/",
-                "Sandbox\HomeController",
-                "postHome",
+                '/',
+                'Sandbox\HomeController',
+                'postHome',
                 [
                     Request::METHOD_POST => [
-                        "/" => [
-                            "class" => "Sandbox\HomeController",
-                            "method" => "postHome",
+                        '/' => [
+                            'class' => 'Sandbox\HomeController',
+                            'method' => 'postHome',
                         ],
                     ],
                 ],
@@ -79,53 +79,32 @@ class RouterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider resolveRouteProvider
-     */
-    public function testResolveRoute(
-        $givenRequestMethod,
-        $givenRequestPath,
-        $givenControllerClass,
-        $givenControllerMethod
-    ) {
-        $this->router->routeMap[$givenRequestMethod][$givenRequestPath] = [
-            "class" => $givenControllerClass,
-            "method" => $givenControllerMethod,
-        ];
+    public function testResolveRoute()
+    {
+        $testController = new class {
+            public function testControllerMethod()
+            {
+                return 'Test Result';
+            }
+        };
 
-        $givenClassInstance = new $givenControllerClass();
-        $expectedResult = $givenClassInstance->{$givenControllerMethod}();
+        $this->router->routeMap[Request::METHOD_GET]['/test'] = [
+            'class' => $testController,
+            'method' => 'testControllerMethod',
+        ];
 
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
         $requestMock
             ->expects($this->once())
-            ->method("getMethod")
-            ->willReturn($givenRequestMethod);
+            ->method('getMethod')
+            ->willReturn(Request::METHOD_GET);
         $requestMock
             ->expects($this->once())
-            ->method("getPath")
-            ->willReturn($givenRequestPath);
+            ->method('getPath')
+            ->willReturn('/test');
 
         $actualResult = $this->router->resolveRoute($requestMock);
 
-        $this->assertEquals($expectedResult, $actualResult);
-    }
-
-    public static function resolveRouteProvider()
-    {
-        return [
-            "test home get" => [
-                Request::METHOD_GET,
-                "/",
-                "Sandbox\HomeController",
-                "getHome",
-            ],
-            "test home post" => [
-                Request::METHOD_POST,
-                "/",
-                "Sandbox\HomeController",
-                "postHome",
-            ],
-        ];
+        $this->assertEquals('Test Result', $actualResult);
     }
 }
