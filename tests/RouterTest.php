@@ -107,4 +107,30 @@ class RouterTest extends TestCase
 
         $this->assertEquals('Test Result', $actualResult);
     }
+
+    public function testResolveRouteArrayNotFoundException()
+    {
+        // test that an exception is thrown when resolveRoute can't
+        // find an array entry for request method and request path
+
+        $this->router->routeMap = [];
+
+        $this->expectException(\Sandbox\RouteArrayNotFoundException::class);
+        $this->expectExceptionMessageMatches(
+            '/Requested Route for Request Method ' .
+                'and Request Path not found in RouteMap./'
+        );
+
+        $requestMock = $this->getMockBuilder(Request::class)->getMock();
+        $requestMock
+            ->expects($this->once())
+            ->method('getMethod')
+            ->willReturn(Request::METHOD_GET);
+        $requestMock
+            ->expects($this->once())
+            ->method('getPath')
+            ->willReturn('/test');
+
+        $this->router->resolveRoute($requestMock);
+    }
 }
