@@ -7,6 +7,6 @@ class HomeController
 {
     public function getMain(Request $request)
     {
-        echo '<html>';
+        return '<html>';
     }
 }

@@ -27,23 +27,21 @@ class HomeControllerTest extends TestCase
         unset($this->homeController);
     }
 
-    public function testHomeControllerGetMainOutputHTML()
+    public function testHomeControllerGetMainReturnsString()
     {
         /*
          * The getMain method should display the default view
          * with the default content of the main homepage.
          * Test that getMain does echo something that contains HTML?
+         * No, we should make sure it returns a string. The router
+         * class will be responsible for outputting that.
          */
 
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
         $requestMock->method('getMethod')->willReturn(Request::METHOD_GET);
         $requestMock->method('getPath')->willReturn('/home');
 
-        ob_start();
-        $this->homeController->getMain($requestMock);
-        $output = ob_get_clean();
-
-        $this->assertStringContainsString('<html>', $output);
+        $this->assertIsString($this->homeController->getMain($requestMock));
     }
 
     public function testHomeControllerMainCallsViewMethod()

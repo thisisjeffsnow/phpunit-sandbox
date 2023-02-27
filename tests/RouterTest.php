@@ -79,7 +79,7 @@ class RouterTest extends TestCase
         ];
     }
 
-    public function testResolveRoute()
+    public function testRouterResolveRouteEchosString()
     {
         $this->router->routeMap[Request::METHOD_GET]['/test'] = [
             'class' => 'Sandbox\Test\TestClass',
@@ -96,9 +96,10 @@ class RouterTest extends TestCase
             ->method('getPath')
             ->willReturn('/test');
 
-        $actualResult = $this->router->resolveRoute($requestMock);
-
-        $this->assertEquals('Test Result', $actualResult);
+        $this->assertStringContainsString(
+            '<html>',
+            $this->router->resolveRoute($requestMock)
+        );
     }
 
     public function testResolveRouteArrayNotFoundException()

@@ -6,6 +6,6 @@ class TestClass
 {
     public function testMethod()
     {
-        return true;
+        return '<html>';
     }
 }
