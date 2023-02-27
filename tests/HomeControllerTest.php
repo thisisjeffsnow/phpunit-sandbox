@@ -11,6 +11,7 @@ require dirname(dirname(__FILE__)) .
 use PHPUnit\Framework\TestCase;
 use Sandbox\Controller\HomeController;
 use Sandbox\Request;
+use Sandbox\View\View;
 
 class HomeControllerTest extends TestCase
 {
@@ -26,7 +27,7 @@ class HomeControllerTest extends TestCase
         unset($this->homeController);
     }
 
-    public function testHomeControllerGetMain()
+    public function testHomeControllerGetMainOutputHTML()
     {
         /*
          * The getMain method should display the default view
@@ -43,5 +44,22 @@ class HomeControllerTest extends TestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('<html>', $output);
+    }
+
+    public function testHomeControllerMainCallsViewMethod()
+    {
+        /*
+         * Assert that the getMain method on HomeController
+         * invokes the view class and renders a view.
+         */
+        $view = $this->getMockBuilder(View::class)->getMock();
+
+        $view->expects($this->once())->method('render');
+
+        $requestMock = $this->getMockBuilder(Request::class)->getMock();
+        $requestMock->method('getMethod')->willReturn(Request::METHOD_GET);
+        $requestMock->method('getPath')->willReturn('/home');
+
+        $this->homeController->getMain($requestMock);
     }
 }
