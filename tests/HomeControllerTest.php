@@ -27,37 +27,37 @@ class HomeControllerTest extends TestCase
         unset($this->homeController);
     }
 
-    public function testHomeControllerGetMainReturnsString()
-    {
-        /*
-         * The getMain method should display the default view
-         * with the default content of the main homepage.
-         * Test that getMain does echo something that contains HTML?
-         * No, we should make sure it returns a string. The Router
-         * class will be responsible for outputting that.
-         */
-
-        $requestMock = $this->getMockBuilder(Request::class)->getMock();
-        $requestMock->method('getMethod')->willReturn(Request::METHOD_GET);
-        $requestMock->method('getPath')->willReturn('/home');
-
-        $this->assertIsString($this->homeController->getMain($requestMock));
-    }
-
     public function testHomeControllerMainCallsViewMethod()
     {
         /*
          * Assert that the getMain method on HomeController
          * invokes the view class and renders a view.
          */
-        $view = $this->getMockBuilder(View::class)->getMock();
+        $viewMock = $this->getMockBuilder(View::class)
+            ->onlyMethods(['render'])
+            ->getMock();
 
-        $view->expects($this->once())->method('render');
+        $viewMock
+            ->expects($this->once())
+            ->method('render')
+            ->willReturn(
+                '<html><head><title>Test</title></head>' .
+                    '<body><p>Hello, world!</p></body></html>'
+            );
 
         $requestMock = $this->getMockBuilder(Request::class)->getMock();
         $requestMock->method('getMethod')->willReturn(Request::METHOD_GET);
         $requestMock->method('getPath')->willReturn('/home');
 
-        $this->homeController->getMain($requestMock);
+        $output = $this->homeController->getMain($requestMock);
+
+        $this->assertStringContainsString('<p>Hello, world!</p>', $output);
+        // or any other assertions based on the expected HTML content
+        // getMain is not calling the render method though?
+        // need to redesign so that the view object is being passed to
+        // controller when it's instantiated so we can test better.
+        // research needed: where does new View() come from? What class
+        // calls this command and where is $view then passed to the controller?
+        // in the router class?
     }
 }
