@@ -33,7 +33,7 @@ class HomeControllerTest extends TestCase
          * The getMain method should display the default view
          * with the default content of the main homepage.
          * Test that getMain does echo something that contains HTML?
-         * No, we should make sure it returns a string. The router
+         * No, we should make sure it returns a string. The Router
          * class will be responsible for outputting that.
          */
 

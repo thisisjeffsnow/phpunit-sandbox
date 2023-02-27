@@ -6,5 +6,6 @@ class View
 {
     public function render()
     {
+        return '<html>';
     }
 }
