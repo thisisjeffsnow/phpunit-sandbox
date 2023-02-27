@@ -9,6 +9,7 @@ require dirname(dirname(__FILE__)) .
     'autoload.php';
 
 use PHPUnit\Framework\TestCase;
+use Sandbox\Controller\HomeController;
 
 class HomeControllerTest extends TestCase
 {
