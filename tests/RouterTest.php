@@ -103,8 +103,10 @@ class RouterTest extends TestCase
 
     public function testResolveRouteArrayNotFoundException()
     {
-        // test that an exception is thrown when resolveRoute can't
-        // find an array entry for request method and request path
+        /*
+         * test that an exception is thrown when resolveRoute can't
+         * find an array entry for request method and request path
+         */
 
         $this->router->routeMap = [];
 
@@ -131,8 +133,10 @@ class RouterTest extends TestCase
 
     public function testResolveRouteRouteClassNotFoundException()
     {
-        // test that an exception is thrown when the requested class
-        // in routeMap doesn't exist or can't be instantiated.
+        /*
+         * test that an exception is thrown when the requested class
+         * in routeMap doesn't exist or can't be instantiated.
+         */
 
         $this->router->routeMap[Request::METHOD_GET]['/test'] = [
             'class' => 'classThatDoesntExist',
@@ -162,8 +166,10 @@ class RouterTest extends TestCase
 
     public function testResolveRouteRouteMethodNotFoundException()
     {
-        // test that an exception is thrown when the requested class
-        // in routeMap exists, but the method doesn't.
+        /*
+         * test that an exception is thrown when the requested class
+         * in routeMap exists, but the method doesn't.
+         */
 
         $this->router->routeMap[Request::METHOD_GET]['/test'] = [
             'class' => 'Sandbox\Test\TestClass',
