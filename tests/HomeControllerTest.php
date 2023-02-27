@@ -10,6 +10,7 @@ require dirname(dirname(__FILE__)) .
 
 use PHPUnit\Framework\TestCase;
 use Sandbox\Controller\HomeController;
+use Sandbox\Request;
 
 class HomeControllerTest extends TestCase
 {
@@ -33,8 +34,12 @@ class HomeControllerTest extends TestCase
          * Test that getMain does echo something that contains HTML?
          */
 
+        $requestMock = $this->getMockBuilder(Request::class)->getMock();
+        $requestMock->method('getMethod')->willReturn(Request::METHOD_GET);
+        $requestMock->method('getPath')->willReturn('/home');
+
         ob_start();
-        $this->homeController->getMain();
+        $this->homeController->getMain($requestMock);
         $output = ob_get_clean();
 
         $this->assertStringContainsString('<html>', $output);

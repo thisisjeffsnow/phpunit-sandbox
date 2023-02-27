@@ -23,7 +23,7 @@ class Router
         ];
     }
 
-    public function resolveRoute($request)
+    public function resolveRoute(Request $request)
     {
         $requestMethod = $request->getMethod();
         $requestPath = $request->getPath();
