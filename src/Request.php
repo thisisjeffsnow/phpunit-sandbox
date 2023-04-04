@@ -32,6 +32,7 @@ class Request
                 throw new InvalidRequestMethodException(
                     'HTTP Request method must be GET, POST, or PUT. '
                 );
+                break;
         }
     }
 }
